@@ -5,8 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "build": "vercel --prod"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
