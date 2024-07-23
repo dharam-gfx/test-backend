@@ -1,18 +1,23 @@
 import mongoose from "mongoose";
 
-
-const orderSchema = new mongoose.Schema( {
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    product: {
+const orderItemScheme = new mongoose.Schema( {
+    productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
     },
     quantity: {
         type: Number,
+        required: true
+    }
+})
+
+const orderSchema = new mongoose.Schema( {
+    customer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    orderItems: {
+        type: [orderItemScheme],
         required: true
     },
     address: {
@@ -20,6 +25,7 @@ const orderSchema = new mongoose.Schema( {
         required: true
     },
     status: {
+        type: String,
         enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
         default: 'pending',
         required: true
