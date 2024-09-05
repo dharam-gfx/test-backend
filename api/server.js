@@ -1,13 +1,16 @@
 import express from 'express';
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Fix for __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
-// here we are configuring dist to serve app files
-app.use(express.static( 'dist' ));
-
-// app.get( '/', ( req, res ) => {
-//     res.send( 'Hello World!' );
-// } );
+// Serve static files from the 'dist' directory (React app)
+app.use(express.static(path.join(__dirname, '../dist')));
 
 const jokes = [
     {
@@ -123,6 +126,13 @@ app.get( '/api/v1/jokes/:id', ( req, res ) => {
     const joke = jokes.find( j => j.id == id );
     res.send( joke );
 })
+
+// This is to make sure all other routes (not /api) go to React's index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
+
+
 const port = process.env.PORT || 5000;
 
 app.listen( port, () => {
