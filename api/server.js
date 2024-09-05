@@ -5,9 +5,9 @@ const app = express();
 // here we are configuring dist to serve app files
 app.use(express.static( 'dist' ));
 
-// app.get( '/', ( req, res ) => {
-//     res.send( 'Hello World!' );
-// } );
+app.get( '/', ( req, res ) => {
+    res.send( 'Hello World!' );
+} );
 
 const jokes = [
     {
